@@ -16,19 +16,17 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        bat "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=$USERNAME -password=$PASSWORD migrate"
+                        bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% migrate")
                     }
                 }
             }
         }
 
-
-
         stage('FLYWAY VALIDATE') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        bat "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=$USERNAME -password=$PASSWORD validate"
+                        bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% validate")
                     }
                 }
             }
@@ -38,7 +36,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        bat "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=$USERNAME -password=$PASSWORD info"
+                        bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% info")
                     }
                 }
             }
