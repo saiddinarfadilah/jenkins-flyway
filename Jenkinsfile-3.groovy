@@ -13,11 +13,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'db-credentials-postgres', usernameVariable: 'USERNAME' , passwordVariable: 'PASSWORD')]) {
-                        bat "=== echo migrate ==="
+                        echo "=== migrate ==="
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% migrate")
-                        bat "=== echo validate ==="
+                        echo "=== validate ==="
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% validate")
-                        bat "=== echo info ==="
+                        echo "=== info ==="
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% info")
                     }
                 }
