@@ -4,7 +4,7 @@ pipeline {
         stage('FLYWAY VERSION') {
             steps {
                 script {
-                    bat 'flyway version'
+                    bat 'D:/Local/flyway/flyway-10.20.1/flyway version'
                 }
             }
         }
