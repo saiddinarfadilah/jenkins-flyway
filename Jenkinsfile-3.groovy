@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DB_CREDENTIALS = credentials('db-credentials-postgres')
-    }
     stages {
 
         stage('FLYWAY VERSION') {
@@ -15,7 +12,7 @@ pipeline {
         stage('FLYWAY MIGRATE') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'db-credentials-postgres', usernameVariable: 'USERNAME' , passwordVariable: 'PASSWORD')]) {
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% migrate")
                     }
                 }
@@ -25,7 +22,7 @@ pipeline {
         stage('FLYWAY VALIDATE') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'db-credentials-postgres', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% validate")
                     }
                 }
@@ -35,7 +32,7 @@ pipeline {
         stage('FLYWAY INFO') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: "${DB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'db-credentials-postgres', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         bat(script: "${env.FLYWAY_HOME}/flyway -configFiles=./conf/flyway3.conf -user=%USERNAME% -password=%PASSWORD% info")
                     }
                 }
