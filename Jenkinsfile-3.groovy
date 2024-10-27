@@ -1,10 +1,8 @@
 pipeline {
     agent any
-
-    environment = {
+    environment {
         DB_CREDENTIALS = credentials('db-credentials-postgres')
     }
-
     stages {
 
         stage('FLYWAY VERSION') {
