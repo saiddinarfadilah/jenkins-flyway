@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    environemnt = {
+    environment = {
         DB_CREDENTIALS = credentials('db-credentials-postgres')
     }
 
